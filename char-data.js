@@ -5,6 +5,8 @@ const charData = [
         image: "7c745b2a-f89f-4bc2-9bb6-e19850fdf984.png", // 💡 imagesフォルダの中に画像を入れる場合。なければ空欄 "" でもOK
         tags: ["主人公", "人間", "憎悪","乙女座"], // 💡 検索に引っかかるキーワード
         colors: ["#7A0B0B", "#628BFD"], // 💡 イメージカラー [メイン, サブ]
+        positions: [],
+        appearedEpisodes: [],
         
         // 基本プロフィール
         profile: {
@@ -67,6 +69,8 @@ const charData = [
         image: "e2cb3a98-e31b-4362-9be1-127bed9d3ead.png", // 💡 imagesフォルダの中に画像を入れる場合。なければ空欄 "" でもOK
         tags: ["兄", "人間", "勇気","聖人", "獅子座"], // 💡 検索に引っかかるキーワード
         colors: ["#11A30A", "#11A30A"], // 💡 イメージカラー [メイン, サブ]
+        positions: [],
+        appearedEpisodes: [],
         
         // 基本プロフィール
         profile: {
