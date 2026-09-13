@@ -21,55 +21,301 @@
         .content-section.active { display: block; }
         
         /* ─── 小説コーナーのスタイル ─── */
-        .hen-box { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
-        .hen-title { margin: 0 0 10px 0; color: #2c3e50; font-size: 18px; border-bottom: 2px solid #2c3e50; padding-bottom: 5px; }
-        .hen-summary { font-size: 14px; color: #666; margin: 0 0 15px 0; line-height: 1.5; background: #fff; padding: 10px; border-left: 4px solid #7a0b0b; border-radius: 0 4px 4px 0; }
-        .episode-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-        .episode-list a { display: block; background: #fff; border: 1px solid #ddd; padding: 12px; border-radius: 4px; color: #34495e; text-decoration: none; font-size: 14px; transition: 0.2s; font-weight: bold; }
-        .episode-list a:hover { background: #f1f2f6; border-color: #34495e; }
-        .episode-list a.miriori-link { background: #fdfaf6; border-color: #e1b12c; color: #b33939; }
-        .episode-list a.miriori-link:hover { background: #ffeaa7; }
+       /* 外枠：深いダークグレーに変更 */
+.hen-box { 
+    background: #1e272e; 
+    border: 1px solid #2f3640; 
+    border-radius: 8px; 
+    padding: 20px; 
+    margin-bottom: 20px; 
+}
+
+/* 見出し：文字色を明るい白に変え、下線も白っぽく調整 */
+.hen-title { 
+    margin: 0 0 10px 0; 
+    color: #f5f6fa; 
+    font-size: 18px; 
+    border-bottom: 2px solid #718093; 
+    padding-bottom: 5px; 
+}
+
+/* あらすじ：背景をさらに深い黒、文字を薄いグレーにして読みやすく。左の赤線は維持 */
+.hen-summary { 
+    font-size: 14px; 
+    color: #dcdde1; 
+    margin: 0 0 15px 0; 
+    line-height: 1.5; 
+    background: #182026; 
+    padding: 10px; 
+    border-left: 4px solid #7a0b0b; 
+    border-radius: 0 4px 4px 0; 
+}
+
+/* グリッド構造（維持） */
+.episode-list { 
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 10px; 
+}
+
+/* 通常のリンク：ダークモード仕様（黒背景、白っぽい文字、グレーの枠） */
+.episode-list a { 
+    display: block; 
+    background: #2f3640; 
+    border: 1px solid #718093; 
+    padding: 12px; 
+    border-radius: 4px; 
+    color: #f5f6fa; 
+    text-decoration: none; 
+    font-size: 14px; 
+    transition: 0.2s; 
+    font-weight: bold; 
+}
+
+/* 通常リンクのホバー：少し明るいグレーに変化 */
+.episode-list a:hover { 
+    background: #353b48; 
+    border-color: #f5f6fa; 
+}
+
+/* 【ここから下は変更なし】みりおり（重要）リンクの明るい和風・ゴールド配色を完全に維持 */
+.episode-list a.miriori-link { 
+    background: #fdfaf6; 
+    border-color: #e1b12c; 
+    color: #b33939; 
+}
+
+/* みりおりリンクのホバー（維持） */
+.episode-list a.miriori-link:hover { 
+    background: #ffeaa7; 
+}
         
         /* 読書画面 */
-        .novel-card { background: #fcfaf2; color: #333; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); font-family: "YuMincho", "Hiragino Mincho ProN", serif; border: 1px solid #e6dfcf; }
-        .novel-text-content { font-size: 18px; line-height: 2.3; letter-spacing: 0.08em; margin-top: 30px; white-space: pre-wrap; }
+       /* 小説カード：深夜の読書に最適な深い色合いに */
+.novel-card { 
+    background: #181c20; 
+    color: #e2e2e2; 
+    padding: 40px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3); 
+    font-family: "YuMincho", "Hiragino Mincho ProN", serif; 
+    border: 1px solid #2c3136; 
+}
+
+/* 本文レイアウト（余白・フォント設定は完全に維持） */
+.novel-text-content { 
+    font-size: 18px; 
+    line-height: 2.3; 
+    letter-spacing: 0.08em; 
+    margin-top: 30px; 
+    white-space: pre-wrap; 
+}
 
         /* ─── キャラクターコーナーのスタイル ─── */
-        .search-box { width: 100%; padding: 14px; font-size: 16px; margin-bottom: 25px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
-        .char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .char-card { background: #fff; border: 1px solid #eee; padding: 20px; border-radius: 6px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
-        .char-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .char-tag { display: inline-block; background: #e0e0e0; padding: 2px 8px; font-size: 11px; border-radius: 3px; margin: 2px; font-weight: bold; color: #555; }
+       /* 検索窓：ダークモード仕様（背景を暗く、文字を明るくして枠線を馴染ませる） */
+.search-box { 
+    width: 100%; 
+    padding: 14px; 
+    font-size: 16px; 
+    margin-bottom: 25px; 
+    background: #1e272e;
+    color: #f5f6fa;
+    border: 1px solid #2f3640; 
+    border-radius: 6px; 
+    box-sizing: border-box; 
+}
+/* 検索窓のプレースホルダー（薄い文字）の色も調整 */
+.search-box::placeholder {
+    color: #718093;
+}
+
+/* グリッド構造（維持） */
+.char-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+    gap: 20px; 
+}
+
+/* キャラクターカード：深いダークグレーに変更 */
+.char-card { 
+    background: #2f3640; 
+    border: 1px solid #353b48; 
+    padding: 20px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    transition: 0.2s; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
+    color: #f5f6fa; /* カード内の通常文字を白系に */
+}
+
+/* キャラカードのホバー：さらに浮き上がり、枠線と影を強調 */
+.char-card:hover { 
+    transform: translateY(-3px); 
+    background: #353b48;
+    border-color: #718093;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
+}
+
+/* 属性・所属タグ：暗い背景に溶け込む渋いグレーに変更 */
+.char-tag { 
+    display: inline-block; 
+    background: #1e272e; 
+    padding: 2px 8px; 
+    font-size: 11px; 
+    border-radius: 3px; 
+    margin: 2px; 
+    font-weight: bold; 
+    color: #718093; 
+}
 
         /* ポップアップ（モーダルモーダル） */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); overflow-y: auto; }
-        .modal-content { background-color: #fff; margin: 40px auto; max-width: 750px; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 25px rgba(0,0,0,0.2); animation: fadeIn 0.2s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        .modal-header { padding: 20px; color: white; display: flex; justify-content: space-between; align-items: center; }
-        .close-btn { font-size: 28px; cursor: pointer; background: none; border: none; color: white; }
-        .modal-body { padding: 25px; display: grid; grid-template-columns: 220px 1fr; gap: 25px; }
-        @media (max-width: 600px) { .modal-body { grid-template-columns: 1fr; } }
-        .char-image-box img { width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd; background: #eee; }
-        .profile-list { list-style: none; padding: 0; margin: 0; line-height: 2; font-size: 14px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
-        table, th, td { border: 1px solid #eee; }
-        th, td { padding: 8px; text-align: left; }
-        th { background: #f9f9f9; }
-        .theory-val { color: #d63031; font-weight: bold; }
-        .skill-block { background: #fdfaf6; border-left: 4px solid #e1b12c; padding: 12px; margin: 12px 0; border-radius: 0 4px 4px 0; }
-        .skill-name { font-weight: bold; color: #2c3e50; }
-        .skill-desc { font-size: 13px; margin-top: 5px; color: #555; line-height: 1.6; }
+/* モーダル背景（暗幕）：少しだけ暗さを増して、中央のボックスを引き立たせる */
+.modal { 
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.75); 
+    overflow-y: auto; 
+}
+
+/* モーダルコンテンツ：真っ白から、高級感のある「深いダークグレー」に変更 */
+.modal-content { 
+    background-color: #1e272e; 
+    margin: 40px auto; 
+    max-width: 750px; 
+    border-radius: 12px; 
+    overflow: hidden; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); 
+    animation: fadeIn 0.2s; 
+    border: 1px solid #2f3640; /* 輪郭をくっきりさせる細い枠線を追加 */
+}
+
+@keyframes fadeIn { 
+    from { opacity: 0; transform: translateY(-10px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+/* ヘッダー：背景が暗くなったので、文字を明るい白に固定 */
+.modal-header { 
+    padding: 20px; 
+    color: #f5f6fa; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.close-btn { 
+    font-size: 28px; 
+    cursor: pointer; 
+    background: none; 
+    border: none; 
+    color: #f5f6fa; 
+}
+
+/* ボディ（グリッド構造・レスポンシブは完全維持） */
+.modal-body { 
+    padding: 25px; 
+    display: grid; 
+    grid-template-columns: 220px 1fr; 
+    gap: 25px; 
+    color: #f5f6fa; /* 全体の文字色を白系に変更 */
+}
+
+@media (max-width: 600px) { 
+    .modal-body { grid-template-columns: 1fr; } 
+}
+
+/* キャラクター画像：枠線を暗くし、画像の背景もダークに */
+.char-image-box img { 
+    width: 100%; 
+    height: auto; 
+    border-radius: 8px; 
+    border: 1px solid #2f3640; 
+    background: #182026; 
+}
+
+/* プロフィールリスト */
+.profile-list { 
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+    line-height: 2; 
+    font-size: 14px; 
+    color: #dcdde1; /* ほんのり優しいグレーにして読みやすく */
+}
+
+/* ステータス表：線を暗く調整 */
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 10px; 
+    font-size: 13px; 
+}
+
+table, th, td { 
+    border: 1px solid #2f3640; 
+}
+
+th, td { 
+    padding: 8px; 
+    text-align: left; 
+}
+
+/* 表の見出し：カードより「一段階暗い黒」にしてメリハリをつける */
+th { 
+    background: #182026; 
+    color: #f5f6fa;
+}
+
+td {
+    color: #dcdde1;
+}
+
+/* 【重要数値】鮮やかな赤はそのまま維持！暗い背景でさらに引き立ちます */
+.theory-val { 
+    color: #ff4757; /* 暗い画面で見やすい、少し鮮やかな赤に微調整 */
+    font-weight: bold; 
+}
+
+/* 【スキルブロック】みりおりと同系統の「ゴールド×ベージュ」の美しい和風・高級感を完全維持 */
+.skill-block { 
+    background: #fdfaf6; 
+    border-left: 4px solid #e1b12c; 
+    padding: 12px; 
+    margin: 12px 0; 
+    border-radius: 0 4px 4px 0; 
+}
+
+/* スキル内の文字（背景が明るいベージュなので、文字は暗い色のままキープ） */
+.skill-name { 
+    font-weight: bold; 
+    color: #2c3e50; 
+}
+
+.skill-desc { 
+    font-size: 13px; 
+    margin-top: 5px; 
+    color: #555; 
+    line-height: 1.6; 
+}
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>創作ポータルサイト</h1>
+    <h1>希創回記の万能サイト</h1>
     
     <!-- 最初の選択メニュー -->
     <div class="menu-select">
-        <button class="btn" onclick="switchSection('novel-section')">📖 小説を読む</button>
-        <button class="btn" onclick="switchSection('char-section')">👤 キャラ設定を見る</button>
+        <button class="btn" onclick="switchSection('novel-section')">小説を読む</button>
+        <button class="btn" onclick="switchSection('char-section')">キャラ設定を見る</button>
     </div>
 
     <!-- 小説コーナー -->
@@ -77,25 +323,25 @@
         <div id="novel-list-area">
             <h2>小説目次</h2>
             <div id="novel-container"></div>
-            <button class="btn-back" onclick="hideAll()" style="margin-top:20px;">🏠 トップに戻る</button>
+            <button class="btn-back" onclick="hideAll()" style="margin-top:20px;">トップに戻る</button>
         </div>
         <div id="novel-viewer" style="display: none;">
-            <button class="btn-back" onclick="closeNovelViewer()" style="margin-bottom: 20px;">⬅️ 目次に戻る</button>
+            <button class="btn-back" onclick="closeNovelViewer()" style="margin-bottom: 20px;">目次に戻る</button>
             <div class="novel-card">
                 <span id="novel-hen-title">編タイトル</span>
                 <h2 id="novel-ep-title">話タイトル</h2>
                 <div id="novel-body-text" class="novel-text-content"></div>
             </div>
-            <button class="btn-back" onclick="closeNovelViewer()" style="margin-top: 30px;">⬅️ 目次に戻る</button>
+            <button class="btn-back" onclick="closeNovelViewer()" style="margin-top: 30px;">目次に戻る</button>
         </div>
     </div>
 
     <!-- キャラ設定コーナー -->
     <div id="char-section" class="content-section">
         <h2>キャラクター検索</h2>
-        <input type="text" id="searchBar" class="search-box" placeholder="名前や属性（例: 憎悪、主人公）で検索..." onkeyup="filterCharacters()">
+        <input type="text" id="searchBar" class="search-box" placeholder="名前や属性（例: レフィダー、1話）で検索..." onkeyup="filterCharacters()">
         <div id="char-grid" class="char-grid"></div>
-        <button class="btn-back" onclick="hideAll()" style="margin-top:20px;">🏠 トップに戻る</button>
+        <button class="btn-back" onclick="hideAll()" style="margin-top:20px;">トップに戻る</button>
     </div>
 </div>
 
@@ -109,7 +355,7 @@
         <div class="modal-body">
             <div class="char-image-box">
                 <img id="modal-img" src="" alt="キャラクター画像">
-                <h4 style="margin: 15px 0 5px 0;">📊 能力系統</h4>
+                <h4 style="margin: 15px 0 5px 0;">能力系統</h4>
                 <table id="modal-ability-stats"></table>
             </div>
             <div>
@@ -117,9 +363,9 @@
                 <ul id="modal-profile" class="profile-list"></ul>
                 <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
                 <div id="modal-text-details"></div>
-                <h3>⚔️ 戦闘ステータス</h3>
+                <h3>戦闘ステータス</h3>
                 <table id="modal-battle-stats"></table>
-                <h3>🪄 複雑型の技</h3>
+                <h3>複雑型の技</h3>
                 <div id="modal-skills"></div>
             </div>
         </div>
