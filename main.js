@@ -15,17 +15,14 @@ novelData.forEach((hen) => {
     const henBox = document.createElement('div');
     henBox.className = 'hen-box';
 
-    // 編のタイトルと予告（サマリー）
     henBox.innerHTML = `
         <h3 class="hen-title">${hen.title}</h3>
         <p class="hen-summary">${hen.summary}</p>
     `;
 
-    // 話一覧のリスト
     const ul = document.createElement('ul');
     ul.className = 'episode-list';
 
-    // 各話のボタンを作成
     hen.episodes.forEach((ep) => {
         const li = document.createElement('li');
         const a = document.createElement('a');
@@ -39,16 +36,15 @@ novelData.forEach((hen) => {
         ul.appendChild(li);
     });
 
-    // ✨ みりおりコーナー（おまけ）を一番最後に追加
     if (hen.miriori) {
         const liMiriori = document.createElement('li');
         const aMiriori = document.createElement('a');
         aMiriori.href = '#';
         aMiriori.className = 'miriori-link';
-        aMiriori.textContent = `✨ おまけ：みりおり`;
+        aMiriori.textContent = `✨みりおり`;
         aMiriori.addEventListener('click', (e) => {
             e.preventDefault();
-            openNovelViewer(hen.title, `おまけ：みりおり`, hen.miriori);
+            openNovelViewer(hen.title, `みりおり`, hen.miriori);
         });
         liMiriori.appendChild(aMiriori);
         ul.appendChild(liMiriori);
@@ -58,57 +54,68 @@ novelData.forEach((hen) => {
     novelContainer.appendChild(henBox);
 });
 
-// 本文を表示する画面を開く関数
 function openNovelViewer(henTitle, epTitle, bodyText) {
     document.getElementById('novel-hen-title').textContent = henTitle;
     document.getElementById('novel-ep-title').textContent = epTitle;
-    
-    // 改行を正しく画面に反映させる処理
     document.getElementById('novel-body-text').innerHTML = bodyText.replace(/\n/g, '<br>');
-
-    // 目次を隠して本文エリアを表示
     document.getElementById('novel-list-area').style.display = "none";
     document.getElementById('novel-viewer').style.display = "block";
-    window.scrollTo(0, 0); // 画面の一番上へスクロール
+    window.scrollTo(0, 0);
 }
 
-// 本文画面から目次に戻る関数
 window.closeNovelViewer = function() {
     document.getElementById('novel-list-area').style.display = "block";
     document.getElementById('novel-viewer').style.display = "none";
 }
 
 
-// ─── ③ キャラクター一覧の生成 ───
+// ─── ③ キャラクター一覧の生成（最初から全表示） ───
 const charGrid = document.getElementById('char-grid');
-charData.forEach((char, index) => {
-    const card = document.createElement('div');
-    card.className = 'char-card';
-    card.setAttribute('data-tags', [char.name, ...char.tags].join(' '));
-    card.style.borderLeft = `5px solid ${char.colors[0]}`; // メインカラーを左端の線にする
 
-    card.addEventListener('click', () => openModal(index));
+if (typeof charData !== 'undefined' && charGrid) {
+    charData.forEach((char, index) => {
+        const card = document.createElement('div');
+        card.className = 'char-card';
+        // 検索用に「名前」と「タグ」をまとめて記憶
+        card.setAttribute('data-tags', [char.name, ...char.tags].join(' '));
+        // イメージカラーの1色目を左端の線にする
+        card.style.borderLeft = `5px solid ${char.colors[0] || '#ccc'}`;
 
-    card.innerHTML = `
-        <h3>${char.name}</h3>
-        <div>${char.tags.map(t => `<span class="char-tag">${t}</span>`).join('')}</div>
-        <p style="font-size:13px; color:#666; margin-top:10px;">${char.personality.substring(0, 30)}...</p>
-    `;
-    charGrid.appendChild(card);
-});
+        card.addEventListener('click', () => openModal(index));
+
+        // 役職のバッジを作成（最大2つまで表示）
+        const positionBadges = char.positions ? char.positions.slice(0, 2).map(pos => `<span class="char-tag" style="background:#2c3e50; color:white;">💼 ${pos}</span>`).join('') : '';
+
+        card.innerHTML = `
+            <h3 style="margin:0 0 10px 0;">${char.name}</h3>
+            <div style="margin-bottom:8px;">${positionBadges}</div>
+            <div>${char.tags.filter(t => !char.positions?.includes(t) && !t.includes('話')).map(t => `<span class="char-tag">${t}</span>`).join('')}</div>
+            <p style="font-size:13px; color:#666; margin-top:10px; line-height:1.4;">${char.personality ? char.personality.substring(0, 40) : ''}...</p>
+        `;
+        charGrid.appendChild(card);
+    });
+}
 
 // ─── ④ 詳細ポップアップ（モーダル）を開く処理 ───
 const modal = document.getElementById('char-modal');
 function openModal(index) {
     const char = charData[index];
     
-    // 背景をグラデーションにする（イメージカラー2色を使用）
-    document.getElementById('modal-header').style.background = `linear-gradient(135deg, ${char.colors[0]}, ${char.colors[1]})`;
+    // 背景を2色のグラデーションにする
+    const color1 = char.colors[0] || '#2c3e50';
+    const color2 = char.colors[1] || '#34495e';
+    document.getElementById('modal-header').style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
     document.getElementById('modal-name').textContent = char.name;
-    document.getElementById('modal-img').src = char.image;
+    document.getElementById('modal-img').src = char.image || '';
 
-    // プロフィールHTML組み立て
+    // 役職テキストの組み立て
+    const positionText = char.positions ? char.positions.join(' / ') : 'なし';
+
+    // プロフィール組み立て（年齢、身長、役職を追加）
     document.getElementById('modal-profile').innerHTML = `
+        <li><b>役職:</b> <span style="color:#2980b9; font-weight:bold;">${positionText}</span></li>
+        <li><b>没年齢:</b> ${char.profile.age || '不明'}</li>
+        <li><b>身長:</b> ${char.profile.height || '不明'}</li>
         <li><b>開始時年齢:</b> ${char.profile.ageStart} / <b>入軍時:</b> ${char.profile.ageMilitary}</li>
         <li><b>性別:</b> ${char.profile.gender} / <b>一人称:</b> ${char.profile.firstPerson}</li>
         <li><b>誕生日:</b> ${char.profile.birthday}</li>
@@ -117,13 +124,19 @@ function openModal(index) {
         <li><b>頭脳指数:</b> <span style="color:#e67e22; font-weight:bold;">${char.brainIndex}</span></li>
     `;
 
-    // 性格・癖・弱点など
+    // 登場話一覧の組み立て（配列があれば綺麗にバッジにして並べる）
+    const episodeListHtml = char.appearedEpisodes && char.appearedEpisodes.length > 0 
+        ? char.appearedEpisodes.map(ep => `<span class="char-tag" style="background:#e1b12c; color:#fff; font-size:12px;">📄 ${ep}</span>`).join(' ')
+        : 'なし';
+
+    // 本文詳細（登場話数を追加）
     document.getElementById('modal-text-details').innerHTML = `
+        <p><b>🎬 【登場話】</b><br>${episodeListHtml}</p>
         <p><b>【性格】</b><br>${char.personality}</p>
-        <p><b>【癖】</b><br>${char.habits.map(h => `・${h}`).join('<br>')}</p>
-        <p><b>【特技】</b><br>${char.specialties.map(s => `・${s}`).join('<br>')}</p>
-        <p><b>【弱点】</b> ${char.weakness} | <b>【地雷】</b> <span style="color:#d63031;">${char.minefield}</span></p>
-        <p><b>【能力】</b><br>${char.abilities.map(a => `・${a}`).join('<br>')}</p>
+        <p><b>【癖】</b><br>${char.habits ? char.habits.map(h => `・${h}`).join('<br>') : ''}</p>
+        <p><b>【特技】</b><br>${char.specialties ? char.specialties.map(s => `・${s}`).join('<br>') : ''}</p>
+        <p><b>【弱点】</b> ${char.weakness || ''} | <b>【地雷】</b> <span style="color:#d63031;">${char.minefield || ''}</span></p>
+        <p><b>【能力】</b><br>${char.abilities ? char.abilities.map(a => `・${a}`).join('<br>') : ''}</p>
     `;
 
     // 能力ステータス表
@@ -147,22 +160,21 @@ function openModal(index) {
         <tr><td>技術</td><td>${bs.technique}</td><td class="theory-val">${bs.techniqueTheory}</td></tr>
     `;
 
-    // 技の一覧
-    document.getElementById('modal-skills').innerHTML = char.skills.map(sk => `
+    // 技一覧
+    document.getElementById('modal-skills').innerHTML = char.skills ? char.skills.map(sk => `
         <div class="skill-block">
             <div class="skill-name">${sk.name}</div>
             <div class="skill-desc">${sk.description}</div>
         </div>
-    `).join('');
+    `).join('') : '';
 
     modal.style.display = "block";
 }
 
-// モーダルを閉じる
 window.closeModal = function() { modal.style.display = "none"; }
 window.onclick = function(event) { if (event.target == modal) closeModal(); }
 
-// ─── ⑤ キャラ検索 ───
+// ─── ⑤ キャラ検索（絞り込み） ───
 window.filterCharacters = function() {
     const query = document.getElementById('searchBar').value.toLowerCase();
     document.querySelectorAll('.char-card').forEach(card => {
