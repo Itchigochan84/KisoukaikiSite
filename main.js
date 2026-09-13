@@ -11,48 +11,50 @@ window.hideAll = function() {
 // ─── ② 小説コーナーの自動生成 ───
 const novelContainer = document.getElementById('novel-container');
 
-novelData.forEach((hen) => {
-    const henBox = document.createElement('div');
-    henBox.className = 'hen-box';
+if (typeof novelData !== 'undefined' && novelContainer) {
+    novelData.forEach((hen) => {
+        const henBox = document.createElement('div');
+        henBox.className = 'hen-box';
 
-    henBox.innerHTML = `
-        <h3 class="hen-title">${hen.title}</h3>
-        <p class="hen-summary">${hen.summary}</p>
-    `;
+        henBox.innerHTML = `
+            <h3 class="hen-title">${hen.title}</h3>
+            <p class="hen-summary">${hen.summary}</p>
+        `;
 
-    const ul = document.createElement('ul');
-    ul.className = 'episode-list';
+        const ul = document.createElement('ul');
+        ul.className = 'episode-list';
 
-    hen.episodes.forEach((ep) => {
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = '#';
-        a.textContent = ep.title;
-        a.addEventListener('click', (e) => {
-            e.preventDefault();
-            openNovelViewer(hen.title, ep.title, ep.text);
+        hen.episodes.forEach((ep) => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = '#';
+            a.textContent = ep.title;
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                openNovelViewer(hen.title, ep.title, ep.text);
+            });
+            li.appendChild(a);
+            ul.appendChild(li);
         });
-        li.appendChild(a);
-        ul.appendChild(li);
+
+        if (hen.miriori) {
+            const liMiriori = document.createElement('li');
+            const aMiriori = document.createElement('a');
+            aMiriori.href = '#';
+            aMiriori.className = 'miriori-link';
+            aMiriori.textContent = `✨ おまけ：みりおり`;
+            aMiriori.addEventListener('click', (e) => {
+                e.preventDefault();
+                openNovelViewer(hen.title, `おまけ：みりおり`, hen.miriori);
+            });
+            liMiriori.appendChild(aMiriori);
+            ul.appendChild(liMiriori);
+        }
+
+        henBox.appendChild(ul);
+        novelContainer.appendChild(henBox);
     });
-
-    if (hen.miriori) {
-        const liMiriori = document.createElement('li');
-        const aMiriori = document.createElement('a');
-        aMiriori.href = '#';
-        aMiriori.className = 'miriori-link';
-        aMiriori.textContent = `✨ おまけ：みりおり`;
-        aMiriori.addEventListener('click', (e) => {
-            e.preventDefault();
-            openNovelViewer(hen.title, `おまけ：みりおり`, hen.miriori);
-        });
-        liMiriori.appendChild(aMiriori);
-        ul.appendChild(liMiriori);
-    }
-
-    henBox.appendChild(ul);
-    novelContainer.appendChild(henBox);
-});
+}
 
 function openNovelViewer(henTitle, epTitle, bodyText) {
     document.getElementById('novel-hen-title').textContent = henTitle;
@@ -77,7 +79,7 @@ if (typeof charData !== 'undefined' && charGrid) {
         const card = document.createElement('div');
         card.className = 'char-card';
 
-        // 💡 【自動合体】名前、タグ、役職、登場話をすべて裏側で1つにまとめて検索用ワードにする
+        // 名前、タグ、役職、登場話をすべて裏側で1つにまとめて検索用ワードにする
         const searchTags = [
             char.name,
             ...(char.tags || []),
@@ -86,7 +88,10 @@ if (typeof charData !== 'undefined' && charGrid) {
         ].join(' ');
         
         card.setAttribute('data-tags', searchTags);
-        card.style.borderLeft = `5px solid ${char.colors || '#ccc'}`;
+        
+        // 左端の線の色（色が設定されていれば1色目を使用、なければグレー）
+        const borderColor = (char.colors && char.colors.length > 0) ? char.colors[0] : '#ccc';
+        card.style.borderLeft = `5px solid ${borderColor}`;
 
         card.addEventListener('click', () => openModal(index));
 
@@ -108,8 +113,9 @@ const modal = document.getElementById('char-modal');
 function openModal(index) {
     const char = charData[index];
     
-    const color1 = char.colors || '#2c3e50';
-    const color2 = char.colors || '#34495e';
+    // 背景を2色のグラデーションにする（色が足りない場合の安全処理付き）
+    const color1 = (char.colors && char.colors.length > 0) ? char.colors[0] : '#2c3e50';
+    const color2 = (char.colors && char.colors.length > 1) ? char.colors[1] : color1;
     document.getElementById('modal-header').style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
     document.getElementById('modal-name').textContent = char.name;
     document.getElementById('modal-img').src = char.image || '';
@@ -118,7 +124,7 @@ function openModal(index) {
 
     document.getElementById('modal-profile').innerHTML = `
         <li><b>役職:</b> <span style="color:#2980b9; font-weight:bold;">${positionText}</span></li>
-        <li><b>年齢（没年齢等）:</b> ${char.profile.age || '不明'}</li>
+        <li><b>年齢:</b> ${char.profile.age || '不明'}</li>
         <li><b>身長:</b> ${char.profile.height || '不明'}</li>
         <li><b>開始時年齢:</b> ${char.profile.ageStart} / <b>入軍時:</b> ${char.profile.ageMilitary}</li>
         <li><b>性別:</b> ${char.profile.gender} / <b>一人称:</b> ${char.profile.firstPerson}</li>
@@ -173,7 +179,7 @@ function openModal(index) {
 window.closeModal = function() { modal.style.display = "none"; }
 window.onclick = function(event) { if (event.target == modal) closeModal(); }
 
-// ─── ① キャラ検索（絞り込み） ───
+// ─── ⑤ キャラ検索（絞り込み） ───
 window.filterCharacters = function() {
     const query = document.getElementById('searchBar').value.toLowerCase();
     document.querySelectorAll('.char-card').forEach(card => {
