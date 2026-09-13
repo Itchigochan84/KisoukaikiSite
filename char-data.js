@@ -10,6 +10,8 @@ const charData = [
         profile: {
             ageStart: "18歳",
             ageMilitary: "22歳",
+            age:"-", //没年齢
+            height:"182cm",
             gender: "？",
             firstPerson: "俺",
             birthday: "8月25日（乙女座）",
@@ -70,6 +72,8 @@ const charData = [
         profile: {
             ageStart: "26歳",
             ageMilitary: "?歳",
+            age:"26歳",//没年齢
+            height:"185cm",
             gender: "男性",
             firstPerson: "俺",
             birthday: "8月18日（獅子座）",
