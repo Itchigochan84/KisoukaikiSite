@@ -1,4 +1,4 @@
-export const novelData = [
+const novelData = [
     {
         id: 1,
         title: "第1編：プロローグ",
