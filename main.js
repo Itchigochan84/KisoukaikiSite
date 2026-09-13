@@ -42,10 +42,10 @@ if (typeof novelData !== 'undefined' && novelContainer) {
             const aMiriori = document.createElement('a');
             aMiriori.href = '#';
             aMiriori.className = 'miriori-link';
-            aMiriori.textContent = `✨ おまけ：みりおり`;
+            aMiriori.textContent = `みりおり`;
             aMiriori.addEventListener('click', (e) => {
                 e.preventDefault();
-                openNovelViewer(hen.title, `おまけ：みりおり`, hen.miriori);
+                openNovelViewer(hen.title, `みりおり`, hen.miriori);
             });
             liMiriori.appendChild(aMiriori);
             ul.appendChild(liMiriori);
