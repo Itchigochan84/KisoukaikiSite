@@ -1,4 +1,4 @@
-export const charData = [
+const charData = [
     {
         name: "レフィダー・ヘラルド",
         image: "images/refider.jpg", // 💡 imagesフォルダの中に画像を入れる場合。なければ空欄 "" でもOK
