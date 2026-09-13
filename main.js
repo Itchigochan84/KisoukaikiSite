@@ -1,6 +1,3 @@
-import { charData } from './char-data.js';
-import { novelData } from './novel-data.js';
-
 // ─── ① 画面切り替えの処理 ───
 window.switchSection = function(sectionId) {
     hideAll();
