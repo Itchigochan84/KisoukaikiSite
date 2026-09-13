@@ -39,14 +39,14 @@ const charData = [
         battleStats: {
             normalTotal: 2068,
             theoryTotal: 5840,
-            hp: 310,       hpTheory: 520,
-            speed: 132,    speedTheory: 1000,
-            denege: 1000,  denegeTheory: 1000,
-            attack: 140,   attackTheory: 2600,
-            defense: 50,   defenseTheory: 90,
-            evasion: 240,  evasionTheory: 240,
-            taijutsu: 56,  taijutsuTheory: 190,
-            technique: 140,techniqueTheory: 200
+            hp: 310, hpTheory: 520,
+            speed: 132, speedTheory: 1000,
+            denege: 1000, denegeTheory: 1000,
+            attack: 140, attackTheory: 2600,
+            defense: 50, defenseTheory: 90,
+            evasion: 240, evasionTheory: 240,
+            taijutsu: 56, taijutsuTheory: 190,
+            technique: 140, techniqueTheory: 200
         },
         
         // 複雑型の技
@@ -99,14 +99,14 @@ const charData = [
         battleStats: {
             normalTotal: 1000,
             theoryTotal: 2000,
-            hp: 92,       hpTheory: 293,
-            speed: 54,    speedTheory: 302,
-            denege: 161,  denegeTheory: 400,
-            attack: 81,   attackTheory: 191,
-            defense: 127,   defenseTheory: 293,
-            evasion: 132,  evasionTheory: 134,
-            taijutsu: 153,  taijutsuTheory: 167,
-            technique: 200,  techniqueTheory: 220
+            hp: 92, hpTheory: 293,
+            speed: 54, speedTheory: 302,
+            denege: 161, denegeTheory: 400,
+            attack: 81, attackTheory: 191,
+            defense: 127, defenseTheory: 293,
+            evasion: 132, evasionTheory: 134,
+            taijutsu: 153, taijutsuTheory: 167,
+            technique: 200, techniqueTheory: 220
         },
         
         // 複雑型の技
