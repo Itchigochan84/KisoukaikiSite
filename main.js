@@ -59,7 +59,11 @@ if (typeof novelData !== 'undefined' && novelContainer) {
 function openNovelViewer(henTitle, epTitle, bodyText) {
     document.getElementById('novel-hen-title').textContent = henTitle;
     document.getElementById('novel-ep-title').textContent = epTitle;
-    document.getElementById('novel-body-text').innerHTML = bodyText.replace(/\n/g, '<br>');
+    
+    // 💡 Nolaの「｜漢字《かんじ》」を自動的にルビタグに変換する魔法の処理
+    let formattedText = bodyText.replace(/[｜|]([^｜|《》]+?)《([^｜|《》]+?)》/g, '<ruby>$1<rt>$2</rt></ruby>');
+    // 改行を画面に反映
+    document.getElementById('novel-body-text').innerHTML = formattedText.replace(/\n/g, '<br>');
     document.getElementById('novel-list-area').style.display = "none";
     document.getElementById('novel-viewer').style.display = "block";
     window.scrollTo(0, 0);
