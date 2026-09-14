@@ -124,9 +124,9 @@ function openModal(index) {
 
     document.getElementById('modal-profile').innerHTML = `
         <li><b>役職:</b> <span style="color:#2980b9; font-weight:bold;">${positionText}</span></li>
-        <li><b>年齢:</b> ${char.profile.age || '不明'}</li>
+        <li><b>没年齢:</b> ${char.profile.age || '不明'}</li>
         <li><b>身長:</b> ${char.profile.height || '不明'}</li>
-        <li><b>開始時年齢:</b> ${char.profile.ageStart} / <b>入軍時:</b> ${char.profile.ageMilitary}</li>
+        <li><b>開始時年齢:</b> ${char.profile.ageStart} / <b>入軍時年齢:</b> ${char.profile.ageMilitary}</li>
         <li><b>性別:</b> ${char.profile.gender} / <b>一人称:</b> ${char.profile.firstPerson}</li>
         <li><b>誕生日:</b> ${char.profile.birthday}</li>
         <li><b>誕生花:</b> ${char.profile.birthFlower}</li>
@@ -143,7 +143,7 @@ function openModal(index) {
         <p><b>【性格】</b><br>${char.personality}</p>
         <p><b>【癖】</b><br>${char.habits ? char.habits.map(h => `・${h}`).join('<br>') : ''}</p>
         <p><b>【特技】</b><br>${char.specialties ? char.specialties.map(s => `・${s}`).join('<br>') : ''}</p>
-        <p><b>【弱点】</b> ${char.weakness || ''} | <b>【地雷】</b> <span style="color:#d63031;">${char.minefield || ''}</span></p>
+        <p><b>【弱点】</b> ${char.weakness || ''} | <br><b>【地雷】</b> <span style="color:#d63031;">${char.minefield || ''}</span></p>
         <p><b>【能力】</b><br>${char.abilities ? char.abilities.map(a => `・${a}`).join('<br>') : ''}</p>
     `;
 
