@@ -305,6 +305,18 @@ td {
     color: #555; 
     line-height: 1.6; 
 }
+    /* 📱 スマホのときだけ小説を読みやすくする設定 */
+@media (max-width: 600px) {
+    .novel-card {
+        padding: 25px 15px !important; /* 左右の余白を狭くして、文字が横に広く入るようにする */
+        border-radius: 4px;
+    }
+    .novel-text-content {
+        font-size: 16.5px !important; /* スマホに最適な少しだけ小ぶりな文字サイズにする */
+        line-height: 2.1;             /* 行間をスマホで見やすい高さに微調整 */
+        letter-spacing: 0.05em;       /* 文字の横の間隔を調整 */
+    }
+}
     </style>
 </head>
 <body>
