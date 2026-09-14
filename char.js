@@ -42,15 +42,15 @@ const charData = [
         // 戦闘ステータス
         battleStats: {
             normalTotal: 30000,
-            theoryTotal: ??????,
-            hp: 1500, hpTheory: ?,
-            speed: 2500, speedTheory: ?,
-            denege: 10000, denegeTheory: ?,
-            attack: 2500, attackTheory: ?,
-            defense: 6450, defenseTheory: ?,
-            evasion: 500, evasionTheory: ?,
-            taijutsu: 250, taijutsuTheory: ?,
-            technique: 6300, techniqueTheory: ?
+            theoryTotal: -,
+            hp: 1500, hpTheory: -,
+            speed: 2500, speedTheory: -,
+            denege: 10000, denegeTheory: -,
+            attack: 2500, attackTheory: -,
+            defense: 6450, defenseTheory: -,
+            evasion: 500, evasionTheory: -,
+            taijutsu: 250, taijutsuTheory: -,
+            technique: 6300, techniqueTheory: -,
         },
         
         // 複雑型の技
