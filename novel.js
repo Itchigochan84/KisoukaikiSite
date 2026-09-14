@@ -207,7 +207,7 @@ const novelData = [
     },
     {
         id: 9,
-        title: "第9編：続く激戦の軍内ランク戦期間後半"！,
+        title: "第9編：続く激戦の軍内ランク戦期間後半!",
         summary: `予告文章...`,
         episodes: [
             { 
