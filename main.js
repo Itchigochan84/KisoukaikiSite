@@ -191,3 +191,59 @@ window.filterCharacters = function() {
         card.style.display = tags.includes(query) ? "block" : "none";
     });
 }
+
+
+// ─── 🆕 【追加機能】最新情報＆世界観データを自動で画面に流し込む処理 ───
+document.addEventListener("DOMContentLoaded", () => {
+    // 【1】通知バッジとお知らせの設定
+    if (typeof newsData !== 'undefined') {
+        const badge = document.getElementById('news-badge');
+        if (badge) badge.textContent = newsData.length;
+        const newsContainer = document.getElementById('news-container');
+        if (newsContainer) {
+            newsContainer.innerHTML = newsData.map(n => `<p style="border-bottom:1px dashed #ddd; padding-bottom:8px;"><strong>[${n.date}]</strong> ${n.text}</p>`).join('');
+        }
+    }
+    // 【2】宇宙管理軍データの流し込み
+    if (typeof militaryData !== 'undefined') {
+        const unitsDiv = document.getElementById('military-units');
+        if(unitsDiv) unitsDiv.innerHTML = militaryData.units.map(u => `<div style="margin-bottom:15px;"><strong>■ ${u.name}</strong><br>【所属】${u.member}<br>【職務】${u.work}</div>`).join('');
+        
+        const examsDiv = document.getElementById('military-exams');
+        if(examsDiv) examsDiv.innerHTML = militaryData.exams.map(e => `
+            <div style="margin-bottom:15px; background:#fff; padding:10px; border:1px solid #eee;">
+                <strong>🏆 ${e.title}</strong> (応募: ${e.applicants} / 合格: ${e.passedCount})<br>
+                【推薦枠】${e.recommendations}<br>
+                【合格者詳細】<br>${e.results.map(r => `・${r.name} (${r.score}) ➔ <strong>${r.status}</strong>`).join('<br>')}
+            </div>
+        `).join('');
+
+        const incidentsDiv = document.getElementById('military-incidents');
+        if(incidentsDiv) incidentsDiv.innerHTML = militaryData.incidents.map(i => `
+            <div style="border-left:3px solid #d63031; padding-left:10px; margin-bottom:15px;">
+                <h4 style="margin:0 0 5px 0;">📂 ${i.title}</h4>
+                <span style="font-size:12px; color:#666;">[著者] ${i.author} | [情報元] ${i.source}</span>
+                <p style="font-size:14px; line-height:1.6; margin-top:8px; white-space:pre-wrap;">${i.content}</p>
+            </div>
+        `).join('');
+    }
+    // 【3】世界観データの流し込み
+    if (typeof worldData !== 'undefined') {
+        const gekkayDiv = document.getElementById('world-gekkay');
+        if(gekkayDiv) gekkayDiv.innerHTML = `<p><b>リーダー:</b> ${worldData.gekkay.leader}</p><p><b>🌙 月の使者 序列リスト:</b><br>${worldData.gekkay.messengers.join('<br>')}</p>`;
+        
+        const mtsDiv = document.getElementById('world-mts');
+        if(mtsDiv) mtsDiv.innerHTML = `<p><b>リーダー:</b> ${worldData.mts.leader}</p><p><b>幹部序列:</b><br>${worldData.mts.executives.join('<br>')}</p><p><b>幹部候補序列:</b><br>${worldData.mts.candidates.join('<br>')}</p>`;
+        
+        const unknownTitle = document.getElementById('world-unknown-title');
+        if(unknownTitle) unknownTitle.textContent = `👁️ ${worldData.unknown.title}`;
+        const unknownDiv = document.getElementById('world-unknown');
+        if(unknownDiv) unknownDiv.innerHTML = `<p><b>序列リスト (1位〜12位):</b><br>${worldData.unknown.ranks.join('<br>')}</p>`;
+
+        const termsDiv = document.getElementById('world-terms');
+        if(termsDiv) termsDiv.innerHTML = worldData.terms.map(t => `<p><strong>【${t.word}】</strong><br>${t.detail}</p>`).join('');
+
+        const geoDiv = document.getElementById('world-geography');
+        if(geoDiv) geoDiv.innerHTML = worldData.geography.map(g => `<div style="margin-bottom:15px; background:#fff; padding:10px; border:1px solid #eee;"><strong>🪐 惑星: ${g.planet} / 🚩 国家: ${g.country}</strong><br>【経済】${g.economy}<br>【背景・特徴】${g.background}</div>`).join('');
+    }
+});
