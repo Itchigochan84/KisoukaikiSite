@@ -247,3 +247,19 @@ document.addEventListener("DOMContentLoaded", () => {
         if(geoDiv) geoDiv.innerHTML = worldData.geography.map(g => `<div style="margin-bottom:15px; background:#fff; padding:10px; border:1px solid #eee;"><strong>🪐 惑星: ${g.planet} / 🚩 国家: ${g.country}</strong><br>【経済】${g.economy}<br>【背景・特徴】${g.background}</div>`).join('');
     }
 });
+
+// ─── 🆕 キャラ名をクリックした時に自動でキャラ設定を開く関数 ───
+window.openCharByName = function(charName) {
+    if (typeof charData !== 'undefined') {
+        // あなたが登録したキャラクターデータ（charData）の中から、名前が一致する人を自動で探す
+        const index = charData.findIndex(c => c.name === charName || c.name.includes(charName));
+        
+        if (index !== -1) {
+            switchSection('char-section'); // 1. キャラ一覧画面に切り替える
+            openModal(index);            // 2. そのキャラの詳細ポップアップをバッと開く
+        } else {
+            // もし名前を書き間違えたり、まだ登録していないキャラを押した場合は、エラーにならず案内を出す
+            alert(`「${charName}」のキャラクター設定はまだ登録されていません。`);
+        }
+    }
+}
