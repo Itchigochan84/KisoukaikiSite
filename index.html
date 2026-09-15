@@ -319,10 +319,23 @@ td {
 }
 
 /* 💡 世界観ページなどのキャラクター名リンクを真っ白にする設定 */
-.content-section a {
-    color: #ffffff !important;       /* 文字の色を「真っ白」にする */
-    text-decoration: underline;    /* 読者がリンクだと分かるように下線を引く */
-    font-weight: bold;             /* 文字を太字にして目立たせる */
+/* 💡 世界観ページなどの「キャラクター名リンク」を、白い背景を消して、文字だけの白にする */
+.content-section p a, 
+.content-section div a[onclick*="openCharByName"] {
+    color: #ffffff !important;       /* 文字の色を「白」にする */
+    background: transparent !important; /* ❌ 真っ白になっていた背景を「完全に透明」にする */
+    border: none !important;         /* 余計なくっついてきた枠線を「消す」 */
+    padding: 0 !important;           /* 余計なボタンの隙間を「ゼロ」にする */
+    box-shadow: none !important;     /* 影がついている場合はそれも「消す」 */
+    text-decoration: underline;      /* リンクだと分かるように下線を引く */
+    font-weight: bold;               /* 文字を太字にする */
+    display: inline !important;      /* ボタンではなく「普通の文字」として並べる */
+}
+
+/* 💡 マウスを乗せたときだけ少し薄いグレーにする演出（お好みで） */
+.content-section p a:hover,
+.content-section div a[onclick*="openCharByName"]:hover {
+    color: #cccccc !important;
 }
 
 /* 💡 マウスを乗せた（ホバーした）ときだけ少し色を変える演出（お好みで） */
