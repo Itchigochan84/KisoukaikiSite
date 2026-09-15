@@ -469,11 +469,43 @@ td {
     </div>
 </div>
 
+<!-- 💡 index.html の一番下、スクリプトが始まるすぐ上にこれをそのまま貼り付けてください -->
 <style>
     .content-section { display: none !important; }
     .content-section.active { display: block !important; }
 </style>
 
+<script>
+    // 🎨 自作された大改造コードを壊さず、ボタンの切り替え命令だけを強制的に上書きして動かす魔法の処理
+    window.switchSection = function(sectionId) {
+        // すべての画面を一旦隠す
+        document.querySelectorAll('.content-section').forEach(sec => {
+            sec.classList.remove('active');
+            sec.style.display = 'none';
+        });
+        // 読書画面も隠す
+        const viewer = document.getElementById('novel-viewer');
+        if(viewer) viewer.style.display = "none";
+        
+        // 押されたボタンの画面だけを【最優先】でバッと表示させる
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+            targetSection.classList.add('active');
+            targetSection.style.display = 'block';
+        }
+    }
+    
+    // 🏠 トップに戻るボタンのフリーズも同時に強制解除
+    window.hideAll = function() {
+        document.querySelectorAll('.content-section').forEach(sec => {
+            sec.classList.remove('active');
+            sec.style.display = 'none';
+        });
+        const viewer = document.getElementById('novel-viewer');
+        if(viewer) viewer.style.display = "none";
+    }
+</script>
+    
 <script src="char.js"></script>
 <script src="novel.js"></script>
 <script src="world.js"></script>
