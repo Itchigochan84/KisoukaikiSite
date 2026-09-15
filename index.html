@@ -318,23 +318,22 @@ td {
     }
 }
 
-/* 💡 世界観ページなどのキャラクター名リンクを真っ白にする設定 */
-/* 💡 世界観ページなどの「キャラクター名リンク」を、白い背景を消して、文字だけの白にする */
-.content-section p a, 
-.content-section div a[onclick*="openCharByName"] {
-    color: #ffffff !important;       /* 文字の色を「白」にする */
-    background: transparent !important; /* ❌ 真っ白になっていた背景を「完全に透明」にする */
-    border: none !important;         /* 余計なくっついてきた枠線を「消す」 */
-    padding: 0 !important;           /* 余計なボタンの隙間を「ゼロ」にする */
-    box-shadow: none !important;     /* 影がついている場合はそれも「消す」 */
-    text-decoration: underline;      /* リンクだと分かるように下線を引く */
-    font-weight: bold;               /* 文字を太字にする */
-    display: inline !important;      /* ボタンではなく「普通の文字」として並べる */
+/* 💡 宇宙管理軍や世界観ページの中にある、キャラクター名リンクの「真っ白な背景」を完全に消し去る設定 */
+.military-box a, 
+.world-box a {
+    color: #ffffff !important;           /* 文字の色を完璧な「白」にする */
+    background: transparent !important;   /* ❌ くっついてきていた白い背景を100%完全に透明にする */
+    border: none !important;             /* 余計な枠線を消す */
+    padding: 0 !important;               /* 余計な隙間をゼロにする */
+    box-shadow: none !important;         /* 影を消す */
+    text-decoration: underline !important;/* リンクだと分かるように下線を引く */
+    font-weight: bold !important;        /* 文字を太字にする */
+    display: inline !important;          /* ボタン型ではなく、普通の文字として並べる */
 }
 
-/* 💡 マウスを乗せたときだけ少し薄いグレーにする演出（お好みで） */
-.content-section p a:hover,
-.content-section div a[onclick*="openCharByName"]:hover {
+/* マウスを乗せたときだけ少し薄いグレーにする演出 */
+.military-box a:hover, 
+.world-box a:hover {
     color: #cccccc !important;
 }
 
