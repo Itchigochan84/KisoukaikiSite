@@ -468,26 +468,38 @@ td {
         <button class="btn-back" onclick="hideAll()">トップに戻る</button>
     </div>
 </div>
+    
+<script src="char.js"></script>
+<script src="novel.js"></script>
+<script src="world.js"></script>
+<script src="main.js"></script>
 
-<!-- 💡 index.html の一番下、スクリプトが始まるすぐ上にこれをそのまま貼り付けてください -->
+<!-- 💡 【フリーズ強制解除コード】 index.html の </body> のすぐ上にこれをそのまま貼り付けてください -->
 <style>
-    .content-section { display: none !important; }
-    .content-section.active { display: block !important; }
+    /* どの部屋に迷い込んでいても、ボタンが押されたら最優先で画面に表示させる命令 */
+    #military-section.active,
+    #world-section.active,
+    #news-section.active {
+        display: block !important;
+        position: relative !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
 </style>
 
 <script>
-    // 🎨 自作された大改造コードを壊さず、ボタンの切り替え命令だけを強制的に上書きして動かす魔法の処理
+    // 🎨 あなたの大改造コードを完全に守りつつ、画面切り替え命令だけを上書きして動かす処理
     window.switchSection = function(sectionId) {
-        // すべての画面を一旦隠す
+        // 一旦すべてのメイン画面を非表示にする
         document.querySelectorAll('.content-section').forEach(sec => {
             sec.classList.remove('active');
             sec.style.display = 'none';
         });
-        // 読書画面も隠す
+        // 小説の本文読書エリアも非表示にする
         const viewer = document.getElementById('novel-viewer');
-        if(viewer) viewer.style.display = "none";
+        if (viewer) viewer.style.display = 'none';
         
-        // 押されたボタンの画面だけを【最優先】でバッと表示させる
+        // 押されたボタンの部屋（ID）だけを【最優先】で画面に表示させる
         const targetSection = document.getElementById(sectionId);
         if (targetSection) {
             targetSection.classList.add('active');
@@ -495,21 +507,17 @@ td {
         }
     }
     
-    // 🏠 トップに戻るボタンのフリーズも同時に強制解除
+    // 🏠 トップに戻るボタンの動作も同時に上書きして正常化
     window.hideAll = function() {
         document.querySelectorAll('.content-section').forEach(sec => {
             sec.classList.remove('active');
             sec.style.display = 'none';
         });
         const viewer = document.getElementById('novel-viewer');
-        if(viewer) viewer.style.display = "none";
+        if (viewer) viewer.style.display = 'none';
     }
 </script>
-    
-<script src="char.js"></script>
-<script src="novel.js"></script>
-<script src="world.js"></script>
-<script src="main.js"></script>
+
 
 </body>
 </html>
