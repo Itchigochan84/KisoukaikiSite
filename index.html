@@ -321,6 +321,14 @@ td {
 </head>
 <body>
 
+<!-- 🔔 コピペする場所：右上の更新履歴（通知ボタン風） -->
+<div style="text-align: right; margin-bottom: 10px; position: relative;">
+    <button class="btn-back" onclick="switchSection('news-section')" style="background: #e74c3c; position: relative;">
+        📢 最新情報 <span id="news-badge" style="position: absolute; top: -5px; right: -5px; background: white; color: #e74c3c; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">0</span>
+    </button>
+</div>
+
+
 <div class="container">
     <h1>希創回記の万能サイト</h1>
     
@@ -328,6 +336,9 @@ td {
     <div class="menu-select">
         <button class="btn" onclick="switchSection('novel-section')">小説を読む</button>
         <button class="btn" onclick="switchSection('char-section')">キャラ設定を見る</button>
+              <!-- 👇 この下の2行を新しく追加してください。背景色のコード（#2980b9など）は自由に変えて大丈夫です！ -->
+        <button class="btn" onclick="switchSection('military-section')" style="background: #21223b;">宇宙管理軍</button>
+        <button class="btn" onclick="switchSection('world-section')" style="background: #1e2b24;">世界観など</button>
     </div>
 
     <!-- 小説コーナー -->
@@ -382,10 +393,63 @@ td {
             </div>
         </div>
     </div>
+
+    <!-- 宇宙管理軍セクション -->
+    <div id="military-section" class="content-section">
+        <h2>🚀 宇宙管理軍 秘密記録室</h2>
+        <div class="hen-box">
+            <h3>🛡️ 部隊編成と職務</h3>
+            <div id="military-units"></div>
+        </div>
+        <div class="hen-box">
+            <h3>📝 宇宙管理軍 入軍試験記録</h3>
+            <div id="military-exams"></div>
+        </div>
+        <div class="hen-box" style="border-left: 4px solid #e67e22; background: #fffcf5;">
+            <h3>🚨 宇宙管理軍 重大事件簿</h3>
+            <div id="military-incidents"></div>
+        </div>
+        <button class="btn-back" onclick="hideAll()">🏠 トップに戻る</button>
+    </div>
+
+    <!-- 世界観・用語・地理セクション -->
+    <div id="world-section" class="content-section">
+        <h2>世界観などの説明</h2>
+        <div class="hen-box">
+            <h3>月界</h3>
+            <div id="world-gekkay"></div>
+        </div>
+        <div class="hen-box">
+            <h3>MTS</h3>
+            <div id="world-mts"></div>
+        </div>
+        <div class="hen-box">
+            <h3 id="world-unknown-title">？？</h3>
+            <div id="world-unknown"></div>
+        </div>
+        <div class="hen-box">
+            <h3>専門用語集</h3>
+            <div id="world-terms"></div>
+        </div>
+        <div class="hen-box">
+            <h3>地理・惑星・国家記録</h3>
+            <div id="world-geography"></div>
+        </div>
+        <button class="btn-back" onclick="hideAll()">トップに戻る</button>
+    </div>
+
+    <!-- 更新履歴セクション -->
+    <div id="news-section" class="content-section">
+        <h2>📢 最新情報・更新履歴</h2>
+        <div id="news-container" class="hen-box"></div>
+        <button class="btn-back" onclick="hideAll()">トップに戻る</button>
+    </div>
+    
 </div>
 
 <script src="char.js"></script>
 <script src="novel.js"></script>
+<script src="world.js"></script>
 <script src="main.js"></script>
 
 </body>
