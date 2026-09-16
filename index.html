@@ -477,14 +477,14 @@ td {
 
 <!-- 💡 【フリーズ強制解除コード】 index.html の </body> のすぐ上にこれをそのまま貼り付けてください -->
 <style>
-    /* どの部屋に迷い込んでいても、ボタンが押されたら最優先で画面に表示させる命令 */
-    #military-section.active,
-    #world-section.active,
-    #news-section.active {
+    /* 💡 強力な !important の上書きに負けないよう、セクション全体の表示命令を最最優先に引き上げます */
+    body div#military-section.active,
+    body div#world-section.active,
+    body div#news-section.active {
         display: block !important;
-        position: relative !important;
         visibility: visible !important;
         opacity: 1 !important;
+        position: relative !important;
     }
 </style>
 
