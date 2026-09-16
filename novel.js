@@ -80,36 +80,36 @@ const novelData = [
                 text: `本文...`
             },
             { 
-                title: "第3話：暴走と事件", 
+                title: "第3話：暴走と事件",
              　　text: `本文...`
             },
             { 
                 title: "第4話：少年の保護",
-             　　text: `本文...` 
+             　　text: `本文...`
             },
             {
                 title: "第5話：遺品と会場",
-                　text: `本文...` 
+                　text: `本文...`
             },
             {
                 title: "第6話：理論値とは",
-                　text: `本文...` 
+                　text: `本文...`
             },
             {
                 title: "第7話：推薦と戦争",
-                　text: `本文...` 
+                　text: `本文...`
             },
             {
                 title: "第8話：軍の強者達",
-                　text: `本文...` 
+                　text: `本文...`
             },
             {
                 title: "第9話：7強の無双",
-                　text: `本文...` 
+                　text: `本文...`
             },
             {
                 title: "第10話：敵の狙いは",
-                　text: `本文...` 
+                　text: `本文...`
             },
         ],
         // みりおり
@@ -128,7 +128,7 @@ const novelData = [
         episodes: [
             { 
                 title: "第11話：〇〇",
-                  text: "本文..."
+                text: "本文..."
             }
         ],
         miriori: "今回は〜..."
@@ -140,7 +140,7 @@ const novelData = [
         episodes: [
             { 
                 title: "第?話：〇〇",
-                  text: "本文..."
+                text: "本文..."
             }
         ],
         miriori: "今回は〜..."
@@ -152,7 +152,7 @@ const novelData = [
         episodes: [
             { 
                 title: "第?話：〇〇",
-                  text: "本文..."
+                text: "本文..."
             }
         ],
         miriori: "今回は〜..."
@@ -164,7 +164,7 @@ const novelData = [
         episodes: [
             { 
                 title: "第?話：〇〇",
-                  text: "本文..."
+                text: "本文..."
             }
         ],
         miriori: "今回は〜..."
@@ -176,7 +176,7 @@ const novelData = [
         episodes: [
             { 
                 title: "第?話：〇〇",
-                  text: "本文..."
+                text: "本文..."
             }
         ],
         miriori: "今回は〜..."
@@ -188,7 +188,7 @@ const novelData = [
         episodes: [
             { 
                 title: "第?話：〇〇",
-                  text: "本文..."
+                text: "本文..."
             }
         ],
         miriori: "今回は〜..."
@@ -200,7 +200,7 @@ const novelData = [
         episodes: [
             { 
                 title: "第?話：〇〇",
-                  text: "本文..."
+                text: "本文..."
             }
         ],
         miriori: "今回は〜..."
@@ -212,7 +212,7 @@ const novelData = [
         episodes: [
             { 
                 title: "第?話：〇〇",
-                  text: "本文..."
+                text: "本文..."
             }
         ],
         miriori: "今回は〜..."
@@ -224,7 +224,7 @@ const novelData = [
         episodes: [
             { 
                 title: "第?話：〇〇",
-                  text: "本文..."
+                text: "本文..."
             }
         ],
         miriori: "今回は〜..."
@@ -236,7 +236,7 @@ const novelData = [
         episodes: [
             { 
                 title: "第?話：〇〇",
-                  text: "本文..."
+                text: "本文..."
             }
         ],
         miriori: "今回は〜..."
@@ -248,7 +248,7 @@ const novelData = [
         episodes: [
             { 
                 title: "第?話：〇〇",
-                  text: "本文..."
+                text: "本文..."
             }
         ],
         miriori: "今回は〜..."
@@ -260,7 +260,7 @@ const novelData = [
         episodes: [
             { 
                 title: "第?話：〇〇",
-                  text: "本文..."
+                text: "本文..."
             }
         ],
         miriori: "今回は〜..."
@@ -272,7 +272,7 @@ const novelData = [
         episodes: [
             { 
                 title: "第?話：〇〇",
-                  text: "本文..."
+                text: "本文..."
             }
         ],
         miriori: "今回は〜..."
@@ -284,7 +284,7 @@ const novelData = [
         episodes: [
             { 
                 title: "第?話：〇〇",
-                  text: "本文..."
+                text: "本文..."
             }
         ],
         miriori: "今回は〜..."
