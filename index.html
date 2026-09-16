@@ -434,6 +434,7 @@ td {
             <div id="military-incidents"></div>
         </div>
         <button class="btn-back" onclick="hideAll()">トップに戻る</button>
+    </div>
 
     <!-- 世界観・用語・地理セクション -->
     <div id="world-section" class="content-section world-box">
@@ -510,37 +511,40 @@ td {
         if (typeof militaryData !== 'undefined' && typeof worldData !== 'undefined') {
             const unitsDiv = document.getElementById('military-units');
             if (unitsDiv && unitsDiv.innerHTML === "") {
-                unitsDiv.innerHTML = militaryData.units.map(u => `<div style="margin-bottom:15px;"><strong>■ ${u.name}</strong><br>【所属】${u.member}<br>【職務】${u.work}</div>`).join('');
+                unitsDiv.innerHTML = militaryData.units.map(u => `<div style="margin-bottom:15px; color:#f5f6fa;"><strong>■ ${u.name}</strong><br>【所属】${u.member}<br>【職務】${u.work}</div>`).join('');
             }
             const examsDiv = document.getElementById('military-exams');
             if (examsDiv && examsDiv.innerHTML === "") {
-                examsDiv.innerHTML = militaryData.exams.map(e => `<div style="margin-bottom:15px; background:#fff; padding:10px; border:1px solid #eee;"><strong>🏆 ${e.title}</strong> (応募: ${e.applicants} / 合格: ${e.passedCount})<br>【推薦枠】${e.recommendations}<br>【合格者詳細】<br>${e.results.map(r => `・${r.name} (${r.score}) ➔ <strong>${r.status}</strong>`).join('<br>')}</div>`).join('');
+                // 🎨 ダークモードに合わせた深いグレー背景に変更し、文字を白系（#f5f6fa）に固定
+                examsDiv.innerHTML = militaryData.exams.map(e => `<div style="margin-bottom:15px; background:#2f3640; padding:15px; border:1px solid #353b48; border-radius:6px; color:#f5f6fa;"><strong>🏆 ${e.title}</strong> (応募: ${e.applicants} / 合格: ${e.passedCount})<br>【推薦枠】${e.recommendations}<br>【合格者詳細】<br>${e.results.map(r => `・${r.name} (${r.score}) ➔ <strong>${r.status}</strong>`).join('<br>')}</div>`).join('');
             }
             const incidentsDiv = document.getElementById('military-incidents');
             if (incidentsDiv && incidentsDiv.innerHTML === "") {
-                incidentsDiv.innerHTML = militaryData.incidents.map(i => `<div style="border-left:3px solid #d63031; padding-left:10px; margin-bottom:15px;"><h4 style="margin:0 0 5px 0;">📂 ${i.title}</h4><span style="font-size:12px; color:#666;">[著者] ${i.author} | [情報元] ${i.source}</span><p style="font-size:14px; line-height:1.6; margin-top:8px; white-space:pre-wrap;">${i.content}</p></div>`).join('');
+                // 🎨 背景が明るいベージュ（#fffcf5）なので、中の文字を濃い色（#2c3e50）に固定して読みやすく
+                incidentsDiv.innerHTML = militaryData.incidents.map(i => `<div style="border-left:3px solid #d63031; padding-left:10px; margin-bottom:15px; color:#2c3e50;"><h4 style="margin:0 0 5px 0; color:#2c3e50;">📂 ${i.title}</h4><span style="font-size:12px; color:#7f8c8d;">[著者] ${i.author} | [情報元] ${i.source}</span><p style="font-size:14px; line-height:1.6; margin-top:8px; white-space:pre-wrap; color:#2c3e50;">${i.content}</p></div>`).join('');
             }
             const gekkayDiv = document.getElementById('world-gekkay');
             if (gekkayDiv && gekkayDiv.innerHTML === "") {
-                gekkayDiv.innerHTML = `<p><b>リーダー:</b> ${worldData.gekkay.leader}</p><p><b>🌙 月の使者 序列リスト:</b><br>${worldData.gekkay.messengers.join('<br>')}</p>`;
+                gekkayDiv.innerHTML = `<p style="color:#f5f6fa;"><b>リーダー:</b> ${worldData.gekkay.leader}</p><p style="color:#f5f6fa;"><b>🌙 月の使者 序列リスト:</b><br>${worldData.gekkay.messengers.join('<br>')}</p>`;
             }
             const mtsDiv = document.getElementById('world-mts');
             if (mtsDiv && mtsDiv.innerHTML === "") {
-                mtsDiv.innerHTML = `<p><b>リーダー:</b> ${worldData.mts.leader}</p><p><b>幹部序列:</b><br>${worldData.mts.executives.join('<br>')}</p><p><b>幹部候補序列:</b><br>${worldData.mts.candidates.join('<br>')}</p>`;
+                mtsDiv.innerHTML = `<p style="color:#f5f6fa;"><b>リーダー:</b> ${worldData.mts.leader}</p><p style="color:#f5f6fa;"><b>幹部序列:</b><br>${worldData.mts.executives.join('<br>')}</p><p style="color:#f5f6fa;"><b>幹部候補序列:</b><br>${worldData.mts.candidates.join('<br>')}</p>`;
             }
             const unknownTitle = document.getElementById('world-unknown-title');
             if (unknownTitle) unknownTitle.textContent = `👁️ ${worldData.unknown.title}`;
             const unknownDiv = document.getElementById('world-unknown');
             if (unknownDiv && unknownDiv.innerHTML === "") {
-                unknownDiv.innerHTML = `<p><b>序列リスト (1位〜12位):</b><br>${worldData.unknown.ranks.join('<br>')}</p>`;
+                unknownDiv.innerHTML = `<p style="color:#f5f6fa;"><b>序列リスト (1位〜12位):</b><br>${worldData.unknown.ranks.join('<br>')}</p>`;
             }
             const termsDiv = document.getElementById('world-terms');
             if (termsDiv && termsDiv.innerHTML === "") {
-                termsDiv.innerHTML = worldData.terms.map(t => `<p><strong>【${t.word}】</strong><br>${t.detail}</p>`).join('');
+                termsDiv.innerHTML = worldData.terms.map(t => `<p style="color:#f5f6fa;"><strong>【${t.word}】</strong><br>${t.detail}</p>`).join('');
             }
             const geoDiv = document.getElementById('world-geography');
             if (geoDiv && geoDiv.innerHTML === "") {
-                geoDiv.innerHTML = worldData.geography.map(g => `<div style="margin-bottom:15px; background:#fff; padding:10px; border:1px solid #eee;"><strong>🪐 惑星: ${g.planet} / 🚩 国家: ${g.country}</strong><br>【経済】${g.economy}<br>【背景・特徴】${g.background}</div>`).join('');
+                // 🎨 ダークモードに合わせた深いグレー背景に変更し、文字を白系（#f5f6fa）に固定
+                geoDiv.innerHTML = worldData.geography.map(g => `<div style="margin-bottom:15px; background:#2f3640; padding:15px; border:1px solid #353b48; border-radius:6px; color:#f5f6fa;"><strong>🪐 惑星: ${g.planet} / 🚩 国家: ${g.country}</strong><br>【経済】${g.economy}<br>【背景・特徴】${g.background}</div>`).join('');
             }
         }
     }
