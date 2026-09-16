@@ -1,11 +1,9 @@
 // ─── ① 画面切り替えの処理 ───
-window.switchSection = function(sectionId) {
-    hideAll();
-    document.getElementById(sectionId).classList.add('active');
-}
-window.hideAll = function() {
-    document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-    document.getElementById('novel-viewer').style.display = "none";
+window.closeNovelViewer = function() {
+    const listArea = document.getElementById('novel-list-area');
+    const viewer = document.getElementById('novel-viewer');
+    if (listArea) listArea.style.display = "block";
+    if (viewer) viewer.style.display = "none";
 }
 
 // ─── ② 小説コーナーの自動生成 ───
@@ -59,21 +57,12 @@ if (typeof novelData !== 'undefined' && novelContainer) {
 function openNovelViewer(henTitle, epTitle, bodyText) {
     document.getElementById('novel-hen-title').textContent = henTitle;
     document.getElementById('novel-ep-title').textContent = epTitle;
-    
-    // 💡 Nolaの「｜漢字《かんじ》」を自動的にルビタグに変換する魔法の処理
-    let formattedText = bodyText.replace(/[｜|]([^｜|《》]+?)《([^｜|《》]+?)》/g, '<ruby>$1<rt>$2</rt></ruby>');
-    // 改行を画面に反映
+    let formattedText = bodyText.replace(/[｜|]([^｜|《>]+?)《([^｜|《>]+?)》/g, '<ruby>$1<rt>$2</rt></ruby>');
     document.getElementById('novel-body-text').innerHTML = formattedText.replace(/\n/g, '<br>');
     document.getElementById('novel-list-area').style.display = "none";
     document.getElementById('novel-viewer').style.display = "block";
     window.scrollTo(0, 0);
 }
-
-window.closeNovelViewer = function() {
-    document.getElementById('novel-list-area').style.display = "block";
-    document.getElementById('novel-viewer').style.display = "none";
-}
-
 
 // ─── ③ キャラクター一覧の生成（最初から全表示） ───
 const charGrid = document.getElementById('char-grid');
@@ -83,7 +72,6 @@ if (typeof charData !== 'undefined' && charGrid) {
         const card = document.createElement('div');
         card.className = 'char-card';
 
-        // 名前、タグ、役職、登場話をすべて裏側で1つにまとめて検索用ワードにする
         const searchTags = [
             char.name,
             ...(char.tags || []),
@@ -93,20 +81,18 @@ if (typeof charData !== 'undefined' && charGrid) {
         
         card.setAttribute('data-tags', searchTags);
         
-        // 左端の線の色（色が設定されていれば1色目を使用、なければグレー）
-        const borderColor = (char.colors && char.colors.length > 0) ? char.colors[0] : '#ccc';
+        const borderColor = (char.colors && char.colors.length > 0) ? char.colors : '#ccc';
         card.style.borderLeft = `5px solid ${borderColor}`;
 
         card.addEventListener('click', () => openModal(index));
 
-        // 役職のバッジを作成（最大2つまで表示）
-        const positionBadges = char.positions ? char.positions.slice(0, 2).map(pos => `<span class="char-tag" style="background:#2c3e50; color:white;">💼 ${pos}</span>`).join('') : '';
+        const positionBadges = char.positions ? char.positions.slice(0, 2).map(pos => `<span class="char-tag" style="background:#1e272e; color:#f5f6fa !important;">💼 ${pos}</span>`).join('') : '';
 
         card.innerHTML = `
-            <h3 style="margin:0 0 10px 0;">${char.name}</h3>
+            <h3 style="margin:0 0 10px 0; color:#f5f6fa;">${char.name}</h3>
             <div style="margin-bottom:8px;">${positionBadges}</div>
             <div>${(char.tags || []).map(t => `<span class="char-tag">${t}</span>`).join('')}</div>
-            <p style="font-size:13px; color:#666; margin-top:10px; line-height:1.4;">${char.personality ? char.personality.substring(0, 40) : ''}...</p>
+            <p style="font-size:13px; color:#dcdde1; margin-top:10px; line-height:1.4;">${char.personality ? char.personality.substring(0, 40) : ''}...</p>
         `;
         charGrid.appendChild(card);
     });
@@ -114,12 +100,12 @@ if (typeof charData !== 'undefined' && charGrid) {
 
 // ─── ④ 詳細ポップアップ（モーダル）を開く処理 ───
 const modal = document.getElementById('char-modal');
+
 function openModal(index) {
     const char = charData[index];
     
-    // 背景を2色のグラデーションにする（色が足りない場合の安全処理付き）
-    const color1 = (char.colors && char.colors.length > 0) ? char.colors[0] : '#2c3e50';
-    const color2 = (char.colors && char.colors.length > 1) ? char.colors[1] : color1;
+    const color1 = (char.colors && char.colors.length > 0) ? char.colors : '#2c3e50';
+    const color2 = (char.colors && char.colors.length > 1) ? char.colors : color1;
     document.getElementById('modal-header').style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
     document.getElementById('modal-name').textContent = char.name;
     document.getElementById('modal-img').src = char.image || '';
@@ -127,7 +113,7 @@ function openModal(index) {
     const positionText = char.positions ? char.positions.join(' / ') : 'なし';
 
     document.getElementById('modal-profile').innerHTML = `
-        <li><b>役職:</b> <span style="color:#2980b9; font-weight:bold;">${positionText}</span></li>
+        <li><b>役職:</b> <span style="color:#3498db; font-weight:bold;">${positionText}</span></li>
         <li><b>没年齢:</b> ${char.profile.age || '不明'}</li>
         <li><b>身長:</b> ${char.profile.height || '不明'}</li>
         <li><b>開始時年齢:</b> ${char.profile.ageStart} / <b>入軍時年齢:</b> ${char.profile.ageMilitary}</li>
@@ -139,7 +125,7 @@ function openModal(index) {
     `;
 
     const episodeListHtml = char.appearedEpisodes && char.appearedEpisodes.length > 0 
-        ? char.appearedEpisodes.map(ep => `<span class="char-tag" style="background:#e1b12c; color:#fff; font-size:12px;">📄 ${ep}</span>`).join(' ')
+        ? char.appearedEpisodes.map(ep => `<span class="char-tag" style="background:#e1b12c; color:#1e272e !important; font-size:12px;">📄 ${ep}</span>`).join(' ')
         : 'なし';
 
     document.getElementById('modal-text-details').innerHTML = `
@@ -147,7 +133,7 @@ function openModal(index) {
         <p><b>【性格】</b><br>${char.personality}</p>
         <p><b>【癖】</b><br>${char.habits ? char.habits.map(h => `・${h}`).join('<br>') : ''}</p>
         <p><b>【特技】</b><br>${char.specialties ? char.specialties.map(s => `・${s}`).join('<br>') : ''}</p>
-        <p><b>【弱点】</b> ${char.weakness || ''} | <br><b>【地雷】</b> <span style="color:#d63031;">${char.minefield || ''}</span></p>
+        <p><b>【弱点】</b> ${char.weakness || ''} | <br><b>【地雷】</b> <span style="color:#ff4757; font-weight:bold;">${char.minefield || ''}</span></p>
         <p><b>【能力】</b><br>${char.abilities ? char.abilities.map(a => `・${a}`).join('<br>') : ''}</p>
     `;
 
@@ -183,82 +169,91 @@ function openModal(index) {
 window.closeModal = function() { modal.style.display = "none"; }
 window.onclick = function(event) { if (event.target == modal) closeModal(); }
 
+
 // ─── ⑤ キャラ検索（絞り込み） ───
 window.filterCharacters = function() {
     const query = document.getElementById('searchBar').value.toLowerCase();
     document.querySelectorAll('.char-card').forEach(card => {
         const tags = card.getAttribute('data-tags').toLowerCase();
-        card.style.display = tags.includes(query) ? "block" : "none";
+        card.style.display = tags.includes(query) ? "" : "none";
     });
 }
 
 
-// ─── 🆕 【追加機能】最新情報＆世界観データを自動で画面に流し込む処理 ───
+// ─── ⑥ 【自動データ注入機能】 ───
 document.addEventListener("DOMContentLoaded", () => {
-    // 【1】通知バッジとお知らせの設定
     if (typeof newsData !== 'undefined') {
         const badge = document.getElementById('news-badge');
         if (badge) badge.textContent = newsData.length;
         const newsContainer = document.getElementById('news-container');
         if (newsContainer) {
-            newsContainer.innerHTML = newsData.map(n => `<p style="border-bottom:1px dashed #ddd; padding-bottom:8px;"><strong>[${n.date}]</strong> ${n.text}</p>`).join('');
+            newsContainer.innerHTML = newsData.map(n => `<p style="border-bottom:1px dashed #353b48; padding-bottom:8px; color:#f5f6fa;"><strong>[${n.date}]</strong> ${n.text}</p>`).join('');
         }
     }
-    // 【2】宇宙管理軍データの流し込み
     if (typeof militaryData !== 'undefined') {
         const unitsDiv = document.getElementById('military-units');
-        if(unitsDiv) unitsDiv.innerHTML = militaryData.units.map(u => `<div style="margin-bottom:15px;"><strong>■ ${u.name}</strong><br>【所属】${u.member}<br>【職務】${u.work}</div>`).join('');
+        if(unitsDiv) unitsDiv.innerHTML = militaryData.units.map(u => `<div style="margin-bottom:15px; color:#f5f6fa;"><strong>■ ${u.name}</strong><br>【所属】${u.member}<br>【職務】${u.work}</div>`).join('');
         
         const examsDiv = document.getElementById('military-exams');
-        if(examsDiv) examsDiv.innerHTML = militaryData.exams.map(e => `
-            <div style="margin-bottom:15px; background:#fff; padding:10px; border:1px solid #eee;">
-                <strong>🏆 ${e.title}</strong> (応募: ${e.applicants} / 合格: ${e.passedCount})<br>
-                【推薦枠】${e.recommendations}<br>
-                【合格者詳細】<br>${e.results.map(r => `・${r.name} (${r.score}) ➔ <strong>${r.status}</strong>`).join('<br>')}
-            </div>
-        `).join('');
+        if(examsDiv) {
+            examsDiv.innerHTML = militaryData.exams.map(e => `
+                <div style="margin-bottom:15px; background:#2f3640; padding:15px; border:1px solid #353b48; border-radius:6px; color:#f5f6fa;">
+                    <strong>🏆 ${e.title}</strong> (応募: ${e.applicants} / 合格: ${e.passedCount})<br>
+                    【推薦枠】${e.recommendations}<br>
+                    【合格者詳細】<br>${e.results.map(r => `・${r.name} (${r.score}) ➔ <strong>${r.status}</strong>`).join('<br>')}
+                </div>
+            `).join('');
+        }
 
         const incidentsDiv = document.getElementById('military-incidents');
-        if(incidentsDiv) incidentsDiv.innerHTML = militaryData.incidents.map(i => `
-            <div style="border-left:3px solid #d63031; padding-left:10px; margin-bottom:15px;">
-                <h4 style="margin:0 0 5px 0;">📂 ${i.title}</h4>
-                <span style="font-size:12px; color:#666;">[著者] ${i.author} | [情報元] ${i.source}</span>
-                <p style="font-size:14px; line-height:1.6; margin-top:8px; white-space:pre-wrap;">${i.content}</p>
-            </div>
-        `).join('');
+        if(incidentsDiv) {
+            incidentsDiv.innerHTML = militaryData.incidents.map(i => `
+                <div style="border-left:3px solid #d63031; padding-left:10px; margin-bottom:15px; color:#2c3e50;">
+                    <h4 style="margin:0 0 5px 0; color:#2c3e50;">📂 ${i.title}</h4>
+                    <span style="font-size:12px; color:#7f8c8d;">[著者] ${i.author} | [情報元] ${i.source}</span>
+                    <p style="font-size:14px; line-height:1.6; margin-top:8px; white-space:pre-wrap; color:#2c3e50;">${i.content}</p>
+                </div>
+            `).join('');
+        }
     }
-    // 【3】世界観データの流し込み
     if (typeof worldData !== 'undefined') {
         const gekkayDiv = document.getElementById('world-gekkay');
-        if(gekkayDiv) gekkayDiv.innerHTML = `<p><b>リーダー:</b> ${worldData.gekkay.leader}</p><p><b>🌙 月の使者 序列リスト:</b><br>${worldData.gekkay.messengers.join('<br>')}</p>`;
+        if(gekkayDiv) gekkayDiv.innerHTML = `<p style="color:#f5f6fa;"><b>リーダー:</b> ${worldData.gekkay.leader}</p><p style="color:#f5f6fa;"><b>🌙 月の使者 序列リスト:</b><br>${worldData.gekkay.messengers.join('<br>')}</p>`;
         
         const mtsDiv = document.getElementById('world-mts');
-        if(mtsDiv) mtsDiv.innerHTML = `<p><b>リーダー:</b> ${worldData.mts.leader}</p><p><b>幹部序列:</b><br>${worldData.mts.executives.join('<br>')}</p><p><b>幹部候補序列:</b><br>${worldData.mts.candidates.join('<br>')}</p>`;
+        if(mtsDiv) mtsDiv.innerHTML = `<p style="color:#f5f6fa;"><b>リーダー:</b> ${worldData.mts.leader}</p><p style="color:#f5f6fa;"><b>幹部序列:</b><br>${worldData.mts.executives.join('<br>')}</p><p style="color:#f5f6fa;"><b>幹部候補序列:</b><br>${worldData.mts.candidates.join('<br>')}</p>`;
         
         const unknownTitle = document.getElementById('world-unknown-title');
         if(unknownTitle) unknownTitle.textContent = `👁️ ${worldData.unknown.title}`;
         const unknownDiv = document.getElementById('world-unknown');
-        if(unknownDiv) unknownDiv.innerHTML = `<p><b>序列リスト (1位〜12位):</b><br>${worldData.unknown.ranks.join('<br>')}</p>`;
+        if(unknownDiv) unknownDiv.innerHTML = `<p style="color:#f5f6fa;"><b>序列リスト (1位〜12位):</b><br>${worldData.unknown.ranks.join('<br>')}</p>`;
 
         const termsDiv = document.getElementById('world-terms');
-        if(termsDiv) termsDiv.innerHTML = worldData.terms.map(t => `<p><strong>【${t.word}】</strong><br>${t.detail}</p>`).join('');
+        if(termsDiv) termsDiv.innerHTML = worldData.terms.map(t => `<p style="color:#f5f6fa;"><strong>【${t.word}】</strong><br>${t.detail}</p>`).join('');
 
         const geoDiv = document.getElementById('world-geography');
-        if(geoDiv) geoDiv.innerHTML = worldData.geography.map(g => `<div style="margin-bottom:15px; background:#fff; padding:10px; border:1px solid #eee;"><strong>🪐 惑星: ${g.planet} / 🚩 国家: ${g.country}</strong><br>【経済】${g.economy}<br>【背景・特徴】${g.background}</div>`).join('');
+        if(geoDiv) {
+            geoDiv.innerHTML = worldData.geography.map(g => `
+                <div style="margin-bottom:15px; background:#2f3640; padding:15px; border:1px solid #353b48; border-radius:6px; color:#f5f6fa;">
+                    <strong>🪐 惑星: ${g.planet} / 🚩 国家: ${g.country}</strong><br>
+                    【経済】${g.economy}<br>
+                    【背景・特徴】${g.background}
+                </div>
+            `).join('');
+        }
     }
 });
 
-// ─── 🆕 キャラ名をクリックした時に自動でキャラ設定を開く関数 ───
+// ─── ⑦ 【一発ジャンプ検索】 ───
 window.openCharByName = function(charName) {
     if (typeof charData !== 'undefined') {
-        // あなたが登録したキャラクターデータ（charData）の中から、名前が一致する人を自動で探す
         const index = charData.findIndex(c => c.name === charName || c.name.includes(charName));
-        
         if (index !== -1) {
-            switchSection('char-section'); // 1. キャラ一覧画面に切り替える
-            openModal(index);            // 2. そのキャラの詳細ポップアップをバッと開く
+            if (typeof switchSection === 'function') {
+                switchSection('char-section');
+            }
+            openModal(index);
         } else {
-            // もし名前を書き間違えたり、まだ登録していないキャラを押した場合は、エラーにならず案内を出す
             alert(`「${charName}」のキャラクター設定はまだ登録されていません。`);
         }
     }
