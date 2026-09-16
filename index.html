@@ -361,8 +361,8 @@ td {
         <button class="btn" onclick="switchSection('novel-section')">小説を読む</button>
         <button class="btn" onclick="switchSection('char-section')">キャラ設定を見る</button>
               <!-- 👇 この下の2行を新しく追加してください。背景色のコード（#2980b9など）は自由に変えて大丈夫です！ -->
-        <button class="btn" onclick="switchSection('military-section')" style="background: #424257;">宇宙管理軍</button>
-        <button class="btn" onclick="switchSection('world-section')" style="background: #424257;">世界観など</button>
+<button class="btn" onclick="switchSpecialSection('military-section')" style="background: #424257;">宇宙管理軍</button>
+<button class="btn" onclick="switchSpecialSection('world-section')" style="background: #424257;">世界観など</button>
     </div>
 
     <!-- 小説コーナー -->
@@ -490,9 +490,9 @@ td {
 
 <!-- 💡 index.html の一番下、<script src="main.js"></script> のすぐ下にある手書きの <script> 〜 </script> の中身を以下に差し替えます -->
 <script>
-    // 🎨 あなたの大改造コードを完全に守りつつ、画面切り替えとデータ組み立てを同時に行う処理
-    window.switchSection = function(sectionId) {
-        // 全ての画面を非表示にする
+    // 🚀 他のどのJavaScriptファイル（main.jsなど）とも競合しない、専用の切り替え命令
+    window.switchSpecialSection = function(sectionId) {
+        // 1. まずすべての画面（小説やキャラ、軍、世界観、更新履歴）を完全に非表示にする
         document.querySelectorAll('.content-section').forEach(sec => {
             sec.classList.remove('active');
             sec.style.display = 'none';
@@ -500,63 +500,43 @@ td {
         const viewer = document.getElementById('novel-viewer');
         if (viewer) viewer.style.display = 'none';
         
-        // 押されたボタンの部屋を【最優先】で画面に表示させる
+        // 2. 押された特定の画面（軍や世界観など）だけを「最優先」で表示する
         const targetSection = document.getElementById(sectionId);
         if (targetSection) {
             targetSection.classList.add('active');
             targetSection.style.display = 'block';
         }
 
-        // 🚀 【追加】画面を開いた瞬間に、その部屋のデータをその場で強制的に組み立てる魔法の命令
-        if (typeof militaryData !== 'undefined' && typeof worldData !== 'undefined') {
+        // 3. 画面が開いた瞬間に、その場でデータを強制的に組み立てて流し込む
+        if (sectionId === 'military-section' && typeof militaryData !== 'undefined') {
             const unitsDiv = document.getElementById('military-units');
-            if (unitsDiv && unitsDiv.innerHTML === "") {
-                unitsDiv.innerHTML = militaryData.units.map(u => `<div style="margin-bottom:15px; color:#f5f6fa;"><strong>■ ${u.name}</strong><br>【所属】${u.member}<br>【職務】${u.work}</div>`).join('');
-            }
+            if (unitsDiv) unitsDiv.innerHTML = militaryData.units.map(u => `<div style="margin-bottom:15px; color:#f5f6fa;"><strong>■ ${u.name}</strong><br>【所属】${u.member}<br>【職務】${u.work}</div>`).join('');
+            
             const examsDiv = document.getElementById('military-exams');
-            if (examsDiv && examsDiv.innerHTML === "") {
-                // 🎨 ダークモードに合わせた深いグレー背景に変更し、文字を白系（#f5f6fa）に固定
-                examsDiv.innerHTML = militaryData.exams.map(e => `<div style="margin-bottom:15px; background:#2f3640; padding:15px; border:1px solid #353b48; border-radius:6px; color:#f5f6fa;"><strong>🏆 ${e.title}</strong> (応募: ${e.applicants} / 合格: ${e.passedCount})<br>【推薦枠】${e.recommendations}<br>【合格者詳細】<br>${e.results.map(r => `・${r.name} (${r.score}) ➔ <strong>${r.status}</strong>`).join('<br>')}</div>`).join('');
-            }
+            if (examsDiv) examsDiv.innerHTML = militaryData.exams.map(e => `<div style="margin-bottom:15px; background:#2f3640; padding:15px; border:1px solid #353b48; border-radius:6px; color:#f5f6fa;"><strong>🏆 ${e.title}</strong> (応募: ${e.applicants} / 合格: ${e.passedCount})<br>【推薦枠】${e.recommendations}<br>【合格者詳細】<br>${e.results.map(r => `・${r.name} (${r.score}) ➔ <strong>${r.status}</strong>`).join('<br>')}</div>`).join('');
+            
             const incidentsDiv = document.getElementById('military-incidents');
-            if (incidentsDiv && incidentsDiv.innerHTML === "") {
-                // 🎨 背景が明るいベージュ（#fffcf5）なので、中の文字を濃い色（#2c3e50）に固定して読みやすく
-                incidentsDiv.innerHTML = militaryData.incidents.map(i => `<div style="border-left:3px solid #d63031; padding-left:10px; margin-bottom:15px; color:#2c3e50;"><h4 style="margin:0 0 5px 0; color:#2c3e50;">📂 ${i.title}</h4><span style="font-size:12px; color:#7f8c8d;">[著者] ${i.author} | [情報元] ${i.source}</span><p style="font-size:14px; line-height:1.6; margin-top:8px; white-space:pre-wrap; color:#2c3e50;">${i.content}</p></div>`).join('');
-            }
+            if (incidentsDiv) incidentsDiv.innerHTML = militaryData.incidents.map(i => `<div style="border-left:3px solid #d63031; padding-left:10px; margin-bottom:15px; color:#2c3e50;"><h4 style="margin:0 0 5px 0; color:#2c3e50;">📂 ${i.title}</h4><span style="font-size:12px; color:#7f8c8d;">[著者] ${i.author} | [情報元] ${i.source}</span><p style="font-size:14px; line-height:1.6; margin-top:8px; white-space:pre-wrap; color:#2c3e50;">${i.content}</p></div>`).join('');
+        }
+
+        if (sectionId === 'world-section' && typeof worldData !== 'undefined') {
             const gekkayDiv = document.getElementById('world-gekkay');
-            if (gekkayDiv && gekkayDiv.innerHTML === "") {
-                gekkayDiv.innerHTML = `<p style="color:#f5f6fa;"><b>リーダー:</b> ${worldData.gekkay.leader}</p><p style="color:#f5f6fa;"><b>🌙 月の使者 序列リスト:</b><br>${worldData.gekkay.messengers.join('<br>')}</p>`;
-            }
+            if (gekkayDiv) gekkayDiv.innerHTML = `<p style="color:#f5f6fa;"><b>リーダー:</b> ${worldData.gekkay.leader}</p><p style="color:#f5f6fa;"><b>🌙 月の使者 序列リスト:</b><br>${worldData.gekkay.messengers.join('<br>')}</p>`;
+            
             const mtsDiv = document.getElementById('world-mts');
-            if (mtsDiv && mtsDiv.innerHTML === "") {
-                mtsDiv.innerHTML = `<p style="color:#f5f6fa;"><b>リーダー:</b> ${worldData.mts.leader}</p><p style="color:#f5f6fa;"><b>幹部序列:</b><br>${worldData.mts.executives.join('<br>')}</p><p style="color:#f5f6fa;"><b>幹部候補序列:</b><br>${worldData.mts.candidates.join('<br>')}</p>`;
-            }
+            if (mtsDiv) mtsDiv.innerHTML = `<p style="color:#f5f6fa;"><b>リーダー:</b> ${worldData.mts.leader}</p><p style="color:#f5f6fa;"><b>幹部序列:</b><br>${worldData.mts.executives.join('<br>')}</p><p style="color:#f5f6fa;"><b>幹部候補序列:</b><br>${worldData.mts.candidates.join('<br>')}</p>`;
+            
             const unknownTitle = document.getElementById('world-unknown-title');
             if (unknownTitle) unknownTitle.textContent = `👁️ ${worldData.unknown.title}`;
             const unknownDiv = document.getElementById('world-unknown');
-            if (unknownDiv && unknownDiv.innerHTML === "") {
-                unknownDiv.innerHTML = `<p style="color:#f5f6fa;"><b>序列リスト (1位〜12位):</b><br>${worldData.unknown.ranks.join('<br>')}</p>`;
-            }
+            if (unknownDiv) unknownDiv.innerHTML = `<p style="color:#f5f6fa;"><b>序列リスト (1位〜12位):</b><br>${worldData.unknown.ranks.join('<br>')}</p>`;
+
             const termsDiv = document.getElementById('world-terms');
-            if (termsDiv && termsDiv.innerHTML === "") {
-                termsDiv.innerHTML = worldData.terms.map(t => `<p style="color:#f5f6fa;"><strong>【${t.word}】</strong><br>${t.detail}</p>`).join('');
-            }
+            if (termsDiv) termsDiv.innerHTML = worldData.terms.map(t => `<p style="color:#f5f6fa;"><strong>【${t.word}】</strong><br>${t.detail}</p>`).join('');
+
             const geoDiv = document.getElementById('world-geography');
-            if (geoDiv && geoDiv.innerHTML === "") {
-                // 🎨 ダークモードに合わせた深いグレー背景に変更し、文字を白系（#f5f6fa）に固定
-                geoDiv.innerHTML = worldData.geography.map(g => `<div style="margin-bottom:15px; background:#2f3640; padding:15px; border:1px solid #353b48; border-radius:6px; color:#f5f6fa;"><strong>🪐 惑星: ${g.planet} / 🚩 国家: ${g.country}</strong><br>【経済】${g.economy}<br>【背景・特徴】${g.background}</div>`).join('');
-            }
+            if (geoDiv) geoDiv.innerHTML = worldData.geography.map(g => `<div style="margin-bottom:15px; background:#2f3640; padding:15px; border:1px solid #353b48; border-radius:6px; color:#f5f6fa;"><strong>🪐 惑星: ${g.planet} / 🚩 国家: ${g.country}</strong><br>【経済】${g.economy}<br>【背景・特徴】${g.background}</div>`).join('');
         }
-    }
-    
-    // トップに戻るボタン
-    window.hideAll = function() {
-        document.querySelectorAll('.content-section').forEach(sec => {
-            sec.classList.remove('active');
-            sec.style.display = 'none';
-        });
-        const viewer = document.getElementById('novel-viewer');
-        if (viewer) viewer.style.display = "none";
     }
 </script>
 
